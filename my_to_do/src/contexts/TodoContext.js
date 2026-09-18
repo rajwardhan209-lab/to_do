@@ -1,0 +1,11 @@
+import { createContext,useContext } from "react";
+export const TodoContext = createContext({
+    todos : [
+        {},{},{}
+    ]
+})
+export const usetodo= () =>{
+    return useContext(TodoContext)
+}
+
+export const Todoprovide = TodoContext.Provider
