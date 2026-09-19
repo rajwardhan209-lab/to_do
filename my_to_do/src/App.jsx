@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import "./App.css";
 import { Todoprovide } from "./contexts";
@@ -16,8 +16,18 @@ export default function App() {
     settodos((prev)=>prev.filter((todo)=>todo.id!==id))
   }
   const toggle_complete = (id) =>{
-    settodos((prev)=>prev.map((prevTodo)=>prevTodo===id?{...prevTodo,comleted:!prevTodo.comleted}:prevTodo))
+    settodos((prev)=>prev.map((prevTodo)=>prevTodo.id===id?{...prevTodo,comleted:!prevTodo.comleted}:prevTodo))
   }
+  useEffect(()=>{
+    const todos = JSON.parse(localStorage.getItem("todos"));
+    if (todos && todos.length > 0) {
+      settodos(todos)
+      
+    }
+  },[])
+  useEffect(()=>{
+    localStorage.setItem('todos',JSON.stringify(todos))
+  },[todos])
   return (
     <Todoprovide value={{todos,addTodo,updatedTodo,deletedTodo,toggleComplete}}>
       <div className="min-h-screen bg-slate-950 text-white px-6 py-14">
